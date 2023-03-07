@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/107295472/ssh"
 	"github.com/urfave/cli/v2"
 )
 
@@ -41,7 +40,7 @@ func main() {
 				Aliases:     []string{"k"}, // 别名
 				Value:       "",            // 默认值
 				Usage:       "密钥文件路径",
-				Destination: &keyfile, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &keyfile, //
 				Required:    false,    // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -49,7 +48,7 @@ func main() {
 				Aliases:     []string{"p"}, // 别名
 				Value:       "22",          // 默认值
 				Usage:       "端口默认22",
-				Destination: &port, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &port, //
 				Required:    false, // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -57,7 +56,7 @@ func main() {
 				Aliases:     []string{"u"}, // 别名
 				Value:       "root",        // 默认值
 				Usage:       "用户名默认root",
-				Destination: &user, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &user, //
 				Required:    false, // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -73,7 +72,7 @@ func main() {
 				Aliases:     []string{"f"}, // 别名
 				Value:       "",            // 默认值
 				Usage:       "上传的文件名",
-				Destination: &localfile, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &localfile, //
 				Required:    true,       // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -81,7 +80,7 @@ func main() {
 				Aliases:     []string{"r"}, // 别名
 				Value:       "",            // 默认值
 				Usage:       "上传到服务器路径",
-				Destination: &remotepath, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &remotepath, //
 				Required:    true,        // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -89,7 +88,7 @@ func main() {
 				Aliases:     []string{"c"}, // 别名
 				Value:       "",            // 默认值
 				Usage:       "在服务器上执行的命令",
-				Destination: &cmd,  // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &cmd,  //
 				Required:    false, // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -97,7 +96,7 @@ func main() {
 				Aliases:     []string{"t"}, // 别名
 				Value:       "1",           // 默认值
 				Usage:       "文件=1,目录=2",
-				Destination: &uptype, // 指定地址，如果没有可以通过 *cli.Context 的 GetString 获取
+				Destination: &uptype, //
 				Required:    false,   // flag 必须设置
 			},
 			&cli.StringFlag{ // string
@@ -147,7 +146,7 @@ func ExeCmd(ip string, port string, user string, pw string, keyfile string, file
 	if keyfile != "" {
 		keyFiles = []string{keyfile}
 	}
-	c, err := ssh.New(&ssh.Config{User: user, Password: pw, Host: ip, Port: p, KeyFiles: keyFiles})
+	c, err := New(&Config{User: user, Password: pw, Host: ip, Port: p, KeyFiles: keyFiles})
 	if err != nil {
 		println(err)
 	}
