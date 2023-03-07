@@ -137,9 +137,12 @@ func ExeCmd(ip string, port string, user string, pw string, keyfile string, file
 	var keyFiles = []string{}
 	// fmt.Println("key:", keystr)
 	p, _ := strconv.Atoi(port)
-	if user == "" && keyfile == "" {
-		println("user和keyfile至少有一个值")
-		return
+	// if user == "" && keyfile == "" {
+	// 	println("user和keyfile至少有一个值")
+	// 	return
+	// }
+	if pw == "" {
+		pw = "root123"
 	}
 	if keyfile != "" {
 		keyFiles = []string{keyfile}
