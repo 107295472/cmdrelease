@@ -240,7 +240,7 @@ func (c *Client) UploadDir(localDir string, remoteDir string, f string) (err err
 	if c.IsFile(rootDst) {
 		c.SFTPClient.Remove(rootDst)
 	}
-	println(localDir)
+	// println(localDir)
 	walkFunc := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -277,31 +277,35 @@ func (c *Client) UploadDir(localDir string, remoteDir string, f string) (err err
 				}
 			}
 		}
-		if info.IsDir() {
-			err := c.MkdirAll(finalDst)
-			if err != nil {
-				log.Println("sftp: MkdirAll", err)
-			}
-			// log.Println("MkdirAll", finalDst)
-			// err = c.SFTPClient.Mkdir(finalDst)
-			// log.Println(err)
-			// if err := c.SFTPClient.Mkdir(finalDst); err != nil {
-			// 	// Do not consider it an error if the directory existed
-			// 	remoteFi, fiErr := c.SFTPClient.Lstat(finalDst)
-			// 	if fiErr != nil || !remoteFi.IsDir() {
-			// 		return err
-			// 	}
-			// }
-			// return err
-		} else {
-
-			// f, err := os.Open(path)
-			// if err != nil {
-			// 	return err
-			// }
-			// defer f.Close()
+		if !info.IsDir() {
 			return c.UploadFile(path, finalDst)
 		}
+		// if info.IsDir() {
+		// 	// println(finalDst)
+		// 	err := c.MkdirAll(finalDst)
+		// 	if err != nil {
+		// 		log.Println("sftp:33333333333 MkdirAll", err)
+		// 	}
+		// 	// log.Println("MkdirAll", finalDst)
+		// 	// err = c.SFTPClient.Mkdir(finalDst)
+		// 	// log.Println(err)
+		// 	// if err := c.SFTPClient.Mkdir(finalDst); err != nil {
+		// 	// 	// Do not consider it an error if the directory existed
+		// 	// 	remoteFi, fiErr := c.SFTPClient.Lstat(finalDst)
+		// 	// 	if fiErr != nil || !remoteFi.IsDir() {
+		// 	// 		return err
+		// 	// 	}
+		// 	// }
+		// 	// return err
+		// } else {
+
+		// 	// f, err := os.Open(path)
+		// 	// if err != nil {
+		// 	// 	return err
+		// 	// }
+		// 	// defer f.Close()
+		// 	return c.UploadFile(path, finalDst)
+		// }
 		return nil
 
 	}
