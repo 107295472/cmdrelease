@@ -47,7 +47,7 @@ func (c *Client) Exec1(cmd string) error {
 
 	session.Stdout = os.Stdout
 	session.Stderr = os.Stderr
-	err = session.Run(cmd)
+	_ = session.Run(cmd)
 	session.Close()
 	return nil
 

@@ -66,7 +66,7 @@ func AuthWithAgent() (ssh.AuthMethod, error) {
 	sock := os.Getenv("SSH_AUTH_SOCK")
 	if sock == "" {
 		// fmt.Println(errors.New("Agent Disabled"))
-		return nil, errors.New("Agent Disabled")
+		return nil, errors.New("agent disabled")
 	}
 	socks, err := net.Dial("unix", sock)
 	if err != nil {
@@ -75,7 +75,7 @@ func AuthWithAgent() (ssh.AuthMethod, error) {
 	}
 	// 1. 返回Signers函数的结果
 	agent := agent.NewClient(socks)
-	signers, err := agent.Signers()
+	signers, _ := agent.Signers()
 	return ssh.PublicKeys(signers...), nil
 	// 2. 返回Signers函数
 	// getSigners := agent.NewClient(socks).Signers

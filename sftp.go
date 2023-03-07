@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -60,7 +59,7 @@ func (c *Client) downloadFile(remoteFile, local string) error {
 	localFile = filepath.ToSlash(localFile)
 	if c.Size(remoteFile) > 1000 {
 		rsum := c.Md5File(remoteFile)
-		ioutil.WriteFile(localFile+".md5", []byte(rsum), 755)
+		os.WriteFile(localFile+".md5", []byte(rsum), 0755)
 		if FileExist(localFile) {
 			if rsum != "" {
 				lsum, _ := Md5File(localFile)
@@ -330,7 +329,7 @@ func (c *Client) ReadAll(filepath string) ([]byte, error) {
 	}
 	defer file.Close()
 
-	return ioutil.ReadAll(file)
+	return io.ReadAll(file)
 }
 
 // FileExist 文件是否存在
